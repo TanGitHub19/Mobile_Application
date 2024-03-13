@@ -4,8 +4,8 @@ package com.mita.gamebuddymobile.api
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 interface ApiService {
@@ -15,9 +15,19 @@ interface ApiService {
     @POST("register")
     fun register(@Body user: User): Call<User>
 
-    @GET("/user/profile")
-    fun getProfile(@Header("Authorization") token: String): Call<ProfileResponse>
-
     @GET("list")
     fun getUser(): Call<List<UserDataClass>>
+
+    @GET("messages/{conversationId}")
+    fun getMessages(@Path("conversationId") conversationId: Int): Call<List<Message>>
+
+    @POST("messages/{conversationId}")
+    fun sendMessage(@Path("conversationId") conversationId: Int, @Body request: Map<String, String>): Call<Message>
+
+    @GET("conversations/{conversationId}")
+    fun getConversation(@Path("conversationId") conversationId: Int): Call<ConversationResponse>
+
+    @POST("conversations/{receiverId}/messages")
+    fun postConversation(@Path("receiverId") conversationId: Int): Call<ConversationResponse>
+
 }

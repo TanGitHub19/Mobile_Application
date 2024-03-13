@@ -23,6 +23,15 @@
             android:name=".UsersAndMatchingPage"
             android:exported="false" />
         <activity
+            android:name=".Conversation"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayChatRecycleView"
+            android:exported="false" />
+        <activity
             android:name=".UserRecycleView"
             android:exported="false" />
         <activity

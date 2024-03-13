@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mita.gamebuddymobile.api.Login
 import com.mita.gamebuddymobile.api.LoginResponse
 import com.mita.gamebuddymobile.api.RetrofitClient
-import com.mita.gamebuddymobile.api.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,16 +48,22 @@ class LogInPage : AppCompatActivity() {
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    val token = response.body()?.token
-                    if (token != null) {
-                        saveToken(token)
-                        intent.putExtra("TOKEN", token)
-                        Toast.makeText(applicationContext, "Login Success", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@LogInPage, HomePage::class.java)
-                        intent.putExtra("TOKEN", token)
-                        startActivity(intent)
-                        finish()
+                    val loginResponse = response.body()
+                    if (loginResponse != null) {
+                        val token = loginResponse.token
+                        val userId = loginResponse.userId
 
+                        saveToken(token)
+                        saveUserId(userId)
+
+                        val intent = Intent(this@LogInPage, HomePage::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "Login response is null",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
                     Toast.makeText(applicationContext, "Login failed", Toast.LENGTH_SHORT).show()
@@ -75,12 +80,19 @@ class LogInPage : AppCompatActivity() {
         })
     }
 
-
     private fun saveToken(token: String) {
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("token", token)
         Log.d("SharedPreferences", "User token saved: token=$token")
+        editor.apply()
+    }
+
+    private fun saveUserId(userId: String) {
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userId", userId)
+        Log.d("SharedPreferences", "User Id saved: userId=$userId")
         editor.apply()
     }
 }
