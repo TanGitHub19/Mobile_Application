@@ -39,17 +39,22 @@ class HomePage : AppCompatActivity() {
                 R.id.bottom_home -> {
                     true
                 }
+                R.id.bottom_users -> {
+                    val intent = Intent(this, UsersAndMatchingPage::class.java)
+                    startActivity(intent)
+                    true
+                }
 
-//                R.id.bottom_users -> {
-//                    val intent = Intent(this, Users::class.java)
-//                    startActivity(intent)
-//                    true
-//                }
-                // Handle other menu items if needed
+                R.id.bottom_myAccount -> {
+                    val intent = Intent(this, AccounSettings::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }
         bottomNavigationView.selectedItemId = R.id.bottom_home
+
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)

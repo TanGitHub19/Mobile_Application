@@ -17,13 +17,13 @@
         android:theme="@style/Theme.GameBuddy"
         tools:targetApi="34">
         <activity
+            android:name=".RandomUserRecyclerView"
+            android:exported="false" />
+        <activity
+            android:name=".UsersAndMatchingPage"
+            android:exported="false" />
+        <activity
             android:name=".UserRecycleView"
-            android:exported="false" />
-        <activity
-            android:name=".Users"
-            android:exported="false" />
-        <activity
-            android:name=".Chat"
             android:exported="false" />
         <activity
             android:name=".Profile"
